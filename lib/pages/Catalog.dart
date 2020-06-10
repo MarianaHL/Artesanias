@@ -1,4 +1,5 @@
 import 'package:Artesanias/db/dbmanager.dart';
+import 'package:Artesanias/pages/Detail.dart';
 import 'package:Artesanias/pages/add_producto.dart';
 import 'package:flutter/material.dart';
 
@@ -45,6 +46,7 @@ class IntroScreenState extends State<IntroScreen> {
         title: Text('Sqlite Demo'),
       ),
       body: ListView(
+        padding: const EdgeInsets.all(8),
         children: <Widget>[
           Form(
             key: _formKey,
@@ -69,39 +71,45 @@ class IntroScreenState extends State<IntroScreen> {
                                 dbmanager.deleteStudent(st.id);
                               },
                               child: Card(
-                                child: Row(
-                                  children: <Widget>[
-                                    Container(
-                                      width: width*0.6,
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: <Widget>[
-                                          Text('Nombre: ${st.name}',style: TextStyle(fontSize: 15),),
-                                          Text('Decripcion: ${st.course}', style: TextStyle(fontSize: 15, color: Colors.black54),),
-                                          Text('Costo: ${st.costo}',style: TextStyle(fontSize: 15),),
-                                          Text('Largo: ${st.largo}',style: TextStyle(fontSize: 15),),
-                                          Text('Ancho: ${st.ancho}',style: TextStyle(fontSize: 15),),
-                                        ],
+                                child: InkWell(
+                                  splashColor: Colors.blue.withAlpha(30),
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(builder: (context) => DetailScreen()));
+                                  },
+                                  child: Row(
+                                    children: <Widget>[
+                                      Container(
+                                        width: width*0.6,
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: <Widget>[
+                                            Text('Nombre: ${st.name}',style: TextStyle(fontSize: 15),),
+                                            Text('Decripcion: ${st.course}', style: TextStyle(fontSize: 15, color: Colors.black54),),
+                                            Text('Costo: ${st.costo}',style: TextStyle(fontSize: 15),),
+                                            Text('Largo: ${st.largo}',style: TextStyle(fontSize: 15),),
+                                            Text('Ancho: ${st.ancho}',style: TextStyle(fontSize: 15),),
+                                          ],
+                                        ),
                                       ),
-                                    ),
 
-                                    IconButton(onPressed: (){
-                                      _nameController.text=st.name;
-                                      _desController.text=st.course;
-                                      _costoController.text=st.costo;
-                                      _largoController.text=st.largo;
-                                      _anchoController.text=st.ancho;
-                                      student=st;
-                                      updateIndex = index;
-                                    }, icon: Icon(Icons.edit, color: Colors.blueAccent,),),
-                                    IconButton(onPressed: (){
-                                      dbmanager.deleteStudent(st.id);
-                                      setState(() {
-                                        studlist.removeAt(index);
-                                      });
-                                    },
-                                      icon: Icon(Icons.delete, color: Colors.red,),)
-                                  ],
+                                      IconButton(onPressed: (){
+                                        Navigator.of(context).push(MaterialPageRoute(
+                                            builder: (context) => HomeScreen(
+                                              true,
+                                              student: st,
+                                            )
+                                        ));
+                                        },icon: Icon(Icons.edit, color: Colors.blueAccent,),),
+                                      IconButton(onPressed: (){
+                                        dbmanager.deleteStudent(st.id);
+                                        setState(() {
+                                          studlist.removeAt(index);
+                                        });
+                                      },
+                                        icon: Icon(Icons.delete, color: Colors.red,),)
+                                    ],
+                                  ),
                                 ),
                               ),
                             );
@@ -112,7 +120,6 @@ class IntroScreenState extends State<IntroScreen> {
                       return new CircularProgressIndicator();
                     },
                   )
-
                 ],
               ),
             ),
@@ -123,7 +130,7 @@ class IntroScreenState extends State<IntroScreen> {
         child: Icon(Icons.add),
         onPressed: () {
           Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => HomeScreen()));
+              MaterialPageRoute(builder: (context) => HomeScreen(false)));
         },
       ),
     );

@@ -3,6 +3,12 @@ import 'package:Artesanias/pages/Catalog.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
+  final bool edit;
+  final Student student;
+
+  HomeScreen(this.edit, {this.student})
+      : assert(edit == true || student ==null);
+
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -19,6 +25,19 @@ class _HomeScreenState extends State<HomeScreen> {
   Student student;
   List<Student> studlist;
   int updateIndex;
+
+  void initState() {
+    super.initState();
+    //if you press the button to edit it must pass to true,
+    //instantiate the name and phone in its respective controller, (link them to each controller)
+    if(widget.edit == true){
+      _nameController.text = widget.student.name;
+      _desController.text = widget.student.course;
+      _costoController.text = widget.student.costo;
+      _largoController.text = widget.student.largo;
+      _anchoController.text = widget.student.ancho;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

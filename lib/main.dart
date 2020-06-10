@@ -5,8 +5,9 @@ import 'package:Artesanias/pages/splash_screen.dart';
 import 'package:flutter/material.dart';
 
 var routes = <String, WidgetBuilder>{
-  "/home": (BuildContext context) => HomeScreen(),
+  "/home": (BuildContext context) => HomeScreen(false),
   "/intro": (BuildContext context) => IntroScreen(),
+  "/detail": (BuildContext context) => DetailScreen(),
 };
 
 void main() => runApp(new MaterialApp(
